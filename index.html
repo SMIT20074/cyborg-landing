@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seam | Human, upgraded</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root{--skin:#ecd3b6;--ink:#2b1b12;--steel:#121a24;--chrome:#aebbc9;--cyan:#19e3ff;--ember:#ff5a36;--x:50%}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Chakra Petch',system-ui,sans-serif;background:var(--steel);color:var(--chrome);line-height:1.6}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
+/* HERO: one headline, two layers, a draggable seam */
+.hero{position:relative;height:100vh;min-height:560px;overflow:hidden;touch-action:pan-y;cursor:ew-resize;user-select:none}
+.layer{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 8vw}
+.layer nav{position:absolute;top:28px;left:8vw;right:8vw;display:flex;justify-content:space-between;font-size:.95rem}
+.layer h1{font-size:clamp(3rem,9vw,8rem);line-height:.95;max-width:11ch}
+.layer p{max-width:34ch;margin-top:28px;font-size:1.15rem}
+.human{background:var(--skin);color:var(--ink)}
+.human h1{font-family:'Fraunces',serif;font-weight:400;font-style:italic;letter-spacing:-.02em}
+.human p{font-family:'Fraunces',serif}
+.machine{background:var(--steel);color:var(--chrome);clip-path:inset(0 0 0 var(--x));
+  background-image:linear-gradient(rgba(25,227,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(25,227,255,.08) 1px,transparent 1px);background-size:44px 44px}
+.machine h1{font-weight:700;text-transform:none;letter-spacing:-.03em;color:#fff;text-shadow:0 0 28px rgba(25,227,255,.55)}
+.machine p{color:var(--cyan)}
+.machine .btn{border-color:var(--cyan);color:var(--cyan)}
+.btn{display:inline-block;margin-top:28px;padding:12px 26px;border:2px solid currentColor;text-decoration:none;font-weight:600;width:max-content;cursor:pointer;background:none;font:inherit;font-weight:600}
+.btn:hover{background:currentColor}.btn:hover span{color:var(--steel)}
+.seam{position:absolute;top:0;bottom:0;left:var(--x);width:2px;background:var(--ember);box-shadow:0 0 18px var(--ember);transform:translateX(-1px)}
+.handle{position:absolute;top:50%;left:var(--x);width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--ember);border:0;color:#fff;font-size:1.1rem;cursor:grab}
+.hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:.85rem;color:var(--ink);mix-blend-mode:normal;background:var(--skin);padding:4px 12px}
+
+/* UPGRADES */
+section{padding:110px 8vw}
+h2{font-size:clamp(2rem,4.5vw,3.4rem);color:#fff;line-height:1.1;max-width:18ch}
+.mods{margin-top:56px;border-top:1px solid rgba(174,187,201,.25)}
+.mod{display:grid;grid-template-columns:1fr 1.4fr;gap:32px;padding:34px 0;border-bottom:1px solid rgba(174,187,201,.25);align-items:center}
+.mod h3{font-size:1.7rem;color:var(--cyan)}
+.mod svg{width:56px;height:56px;margin-bottom:12px;stroke:var(--cyan);fill:none;stroke-width:1.5}
+.mod:hover h3{text-shadow:0 0 14px var(--cyan)}
+
+/* SPECS */
+.specs{background:#0b1118;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px}
+.specs div{border-left:2px solid var(--ember);padding-left:18px}
+.specs b{display:block;font-size:2.6rem;color:#fff;font-weight:700}
+
+/* CTA */
+.cta{background:var(--skin);color:var(--ink);text-align:left}
+.cta h2{font-family:'Fraunces',serif;font-weight:400;color:var(--ink)}
+.cta p{margin-top:18px;max-width:42ch;font-family:'Fraunces',serif;font-size:1.15rem}
+.cta .btn{color:var(--ink)}
+#msg{margin-top:18px;font-weight:600;min-height:1.6em}
+footer{padding:28px 8vw;font-size:.85rem;background:#0b1118}
+
+@media(max-width:700px){.mod{grid-template-columns:1fr}.layer nav{font-size:.8rem}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero" id="hero">
+  <div class="layer human">
+    <nav><strong>Seam</strong><span>Clinic for augmentation</span></nav>
+    <h1>Human, upgraded.</h1>
+    <p>Keep everything that made you you. Add what you were always missing.</p>
+  </div>
+  <div class="layer machine" aria-hidden="true">
+    <nav><strong>SEAM//OS</strong><span>Status: online</span></nav>
+    <h1>Human.exe, upgraded.</h1>
+    <p>Neural link, optic array and titanium frame. Installed in one visit.</p>
+    <a class="btn" href="#book" tabindex="-1"><span>Book a fitting</span></a>
+  </div>
+  <div class="seam"></div>
+  <button class="handle" id="handle" role="slider" aria-label="Reveal the machine side" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">&#8596;</button>
+  <div class="hint">Drag to cross the seam</div>
+</header>
+
+<section id="upgrades">
+  <h2>Three upgrades, one seamless you</h2>
+  <div class="mods">
+    <div class="mod"><div>
+      <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="9"/><path d="M28 4v10M28 42v10M4 28h10M42 28h10M11 11l7 7M38 38l7 7M45 11l-7 7M18 38l-7 7"/></svg>
+      <h3>Neural link</h3></div>
+      <p>Control your devices, search your memory and send messages with a thought. The link sits behind the ear and charges while you sleep.</p></div>
+    <div class="mod"><div>
+      <svg viewBox="0 0 56 56"><path d="M4 28c8-14 40-14 48 0-8 14-40 14-48 0z"/><circle cx="28" cy="28" r="6"/></svg>
+      <h3>Optic array</h3></div>
+      <p>See in the dark, zoom to read a sign across the street, and overlay directions on the road in front of you.</p></div>
+    <div class="mod"><div>
+      <svg viewBox="0 0 56 56"><rect x="14" y="6" width="28" height="44" rx="4"/><path d="M14 20h28M14 34h28M28 6v44"/></svg>
+      <h3>Titanium frame</h3></div>
+      <p>Reinforced limbs that lift three times your body weight and never tire. Fitted to your height and gait.</p></div>
+  </div>
+</section>
+
+<section class="specs" aria-label="Results">
+  <div><b data-n="12000">0</b>patients upgraded</div>
+  <div><b data-n="3">0</b>times stronger</div>
+  <div><b data-n="48">0</b>hour recovery</div>
+  <div><b data-n="99">0</b>% would do it again</div>
+</section>
+
+<section class="cta" id="book">
+  <h2>Ready to cross the seam?</h2>
+  <p>Book a free consultation. We will walk you through each upgrade and what stays human.</p>
+  <button class="btn" id="bookBtn"><span>Book a fitting</span></button>
+  <div id="msg" role="status"></div>
+</section>
+
+<footer>Seam. A demo landing page built for the Techfest CA Program.</footer>
+
+<script>
+const hero=document.getElementById('hero'),handle=document.getElementById('handle');
+let drag=false;
+function setX(p){p=Math.max(0,Math.min(100,p));hero.style.setProperty('--x',p+'%');handle.setAttribute('aria-valuenow',Math.round(p))}
+function fromEvent(e){const r=hero.getBoundingClientRect();setX((e.clientX-r.left)/r.width*100)}
+hero.addEventListener('pointerdown',e=>{drag=true;fromEvent(e)});
+window.addEventListener('pointermove',e=>{if(drag)fromEvent(e)});
+window.addEventListener('pointerup',()=>drag=false);
+handle.addEventListener('keydown',e=>{const v=+handle.getAttribute('aria-valuenow');
+  if(e.key==='ArrowLeft')setX(v-5);if(e.key==='ArrowRight')setX(v+5)});
+// one intro sweep: the machine side slides in from the right
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  let p=100;setX(100);const t0=performance.now();
+  (function step(t){const k=Math.min((t-t0)/1400,1);setX(100-50*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step)})(t0);
+}
+// count-up stats
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);
+  const n=+e.target.dataset.n,t0=performance.now();
+  (function s(t){const k=Math.min((t-t0)/1200,1);e.target.textContent=Math.round(n*k).toLocaleString();if(k<1)requestAnimationFrame(s)})(t0)}));
+document.querySelectorAll('[data-n]').forEach(el=>io.observe(el));
+document.getElementById('bookBtn').addEventListener('click',()=>{
+  document.getElementById('msg').textContent='Fitting requested. We will contact you within one day.'});
+</script>
+</body>
+</html>
