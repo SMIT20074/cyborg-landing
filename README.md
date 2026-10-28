@@ -14,4 +14,4 @@ Responsive landing page for the Techfest CA Program web development task.
 Open `index.html` in a browser.
 
 ## Live demo
-Add your GitHub Pages link here.
+https://smit20074.github.io/cyborg-landing/
