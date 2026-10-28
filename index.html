@@ -4,135 +4,302 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Seam | Human, upgraded</title>
+<meta name="description" content="Seam is a cyborg augmentation clinic. Build your upgrade, book a fitting.">
+<meta name="theme-color" content="#121a24">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%23121a24%27/%3E%3Crect x=%2715%27 width=%272%27 height=%2732%27 fill=%27%23ff5a36%27/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
 <style>
-:root{--skin:#ecd3b6;--ink:#2b1b12;--steel:#121a24;--chrome:#aebbc9;--cyan:#19e3ff;--ember:#ff5a36;--x:50%}
+:root{--skin:#ecd3b6;--ink:#2b1b12;--steel:#121a24;--deep:#0b1118;--panel:#1a2432;--chrome:#aebbc9;--cyan:#19e3ff;--ember:#ff5a36;--line:rgba(174,187,201,.22);--x:50%}
 *{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+.skip{position:absolute;left:-999px;top:8px;z-index:9;background:#fff;color:#000;padding:10px 16px}.skip:focus{left:8px}
 body{font-family:'Chakra Petch',system-ui,sans-serif;background:var(--steel);color:var(--chrome);line-height:1.6}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+section{padding:110px 8vw}
+h2{font-size:clamp(2rem,4.5vw,3.4rem);color:#fff;line-height:1.1;max-width:20ch}
+.lead{max-width:52ch;margin-top:16px}
 
-/* HERO: one headline, two layers, a draggable seam */
-.hero{position:relative;height:100vh;min-height:560px;overflow:hidden;touch-action:pan-y;cursor:ew-resize;user-select:none}
+/* HERO */
+.hero{position:relative;height:100vh;min-height:580px;overflow:hidden;touch-action:pan-y;cursor:ew-resize;user-select:none}
 .layer{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 8vw}
-.layer nav{position:absolute;top:28px;left:8vw;right:8vw;display:flex;justify-content:space-between;font-size:.95rem}
-.layer h1{font-size:clamp(3rem,9vw,8rem);line-height:.95;max-width:11ch}
+.layer nav{position:absolute;top:28px;left:8vw;right:8vw;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:.95rem}
+.layer nav div{display:flex;gap:22px}
+.layer nav a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}.layer nav a:hover{text-decoration:underline}
+.layer h1{font-size:clamp(3.2rem,10vw,8rem);line-height:.95;max-width:11ch}
 .layer p{max-width:34ch;margin-top:28px;font-size:1.15rem}
 .human{background:var(--skin);color:var(--ink)}
 .human h1{font-family:'Fraunces',serif;font-weight:400;font-style:italic;letter-spacing:-.02em}
 .human p{font-family:'Fraunces',serif}
-.machine{background:var(--steel);color:var(--chrome);clip-path:inset(0 0 0 var(--x));
+.machine{background:var(--steel);clip-path:inset(0 0 0 var(--x));
   background-image:linear-gradient(rgba(25,227,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(25,227,255,.08) 1px,transparent 1px);background-size:44px 44px}
-.machine h1{font-weight:700;text-transform:none;letter-spacing:-.03em;color:#fff;text-shadow:0 0 28px rgba(25,227,255,.55)}
+.layer .btn{min-width:230px;text-align:center}
+.machine h1{font-size:.88em;font-weight:700;letter-spacing:-.03em;color:#fff;text-shadow:0 0 28px rgba(25,227,255,.55)}
 .machine p{color:var(--cyan)}
-.machine .btn{border-color:var(--cyan);color:var(--cyan)}
-.btn{display:inline-block;margin-top:28px;padding:12px 26px;border:2px solid currentColor;text-decoration:none;font-weight:600;width:max-content;cursor:pointer;background:none;font:inherit;font-weight:600}
-.btn:hover{background:currentColor}.btn:hover span{color:var(--steel)}
+.btn{display:inline-block;margin-top:28px;padding:13px 28px;border:2px solid currentColor;text-decoration:none;font:inherit;font-weight:600;width:max-content;cursor:pointer;background:none;color:inherit;transition:background .2s,color .2s}
+.machine .btn{color:var(--cyan)}
+.btn:hover{background:var(--cyan);color:var(--steel)}
+.cta .btn:hover,.human .btn:hover{background:var(--ink);color:var(--skin)}
+.hud{position:absolute;right:8vw;bottom:16vh;width:260px;border:1px solid var(--cyan);padding:14px 18px;background:rgba(11,17,24,.7);color:var(--cyan);font-size:.9rem}.hud div{display:flex;justify-content:space-between;padding:3px 0}.hud b{color:#fff}
 .seam{position:absolute;top:0;bottom:0;left:var(--x);width:2px;background:var(--ember);box-shadow:0 0 18px var(--ember);transform:translateX(-1px)}
-.handle{position:absolute;top:50%;left:var(--x);width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--ember);border:0;color:#fff;font-size:1.1rem;cursor:grab}
-.hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:.85rem;color:var(--ink);mix-blend-mode:normal;background:var(--skin);padding:4px 12px}
+.handle{position:absolute;top:50%;left:var(--x);width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:var(--ember);border:0;color:#fff;font-size:1.1rem;cursor:grab}
+.hint{position:absolute;bottom:26px;z-index:2;left:8vw;font-size:.85rem;color:var(--ink);background:var(--skin);padding:4px 14px}
+
+/* TICKER */
+.ticker{background:var(--deep);border-block:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:14px 0;color:var(--cyan);font-size:.9rem}
+.ticker span{display:inline-block;padding-left:100%;animation:tick 32s linear infinite}
+@keyframes tick{to{transform:translateX(-100%)}}
 
 /* UPGRADES */
-section{padding:110px 8vw}
-h2{font-size:clamp(2rem,4.5vw,3.4rem);color:#fff;line-height:1.1;max-width:18ch}
-.mods{margin-top:56px;border-top:1px solid rgba(174,187,201,.25)}
-.mod{display:grid;grid-template-columns:1fr 1.4fr;gap:32px;padding:34px 0;border-bottom:1px solid rgba(174,187,201,.25);align-items:center}
-.mod h3{font-size:1.7rem;color:var(--cyan)}
-.mod svg{width:56px;height:56px;margin-bottom:12px;stroke:var(--cyan);fill:none;stroke-width:1.5}
-.mod:hover h3{text-shadow:0 0 14px var(--cyan)}
+.mods{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.mod{background:var(--steel);padding:34px 28px;transition:background .25s}
+.mod:hover{background:var(--panel)}
+.mod svg{width:52px;height:52px;margin-bottom:14px;stroke:var(--cyan);fill:none;stroke-width:1.5}
+.mod h3{font-size:1.45rem;color:#fff;margin-bottom:6px}
+.mod small{display:block;margin-top:14px;color:var(--cyan)}
 
-/* SPECS */
-.specs{background:#0b1118;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px}
+/* BUILDER */
+.build{background:var(--deep)}
+.builder{margin-top:48px;display:grid;grid-template-columns:1.1fr 1fr;gap:48px}
+.opts{display:grid;gap:10px;align-content:start}
+.opt{display:flex;gap:14px;align-items:center;padding:16px 18px;border:1px solid var(--line);cursor:pointer;transition:border-color .2s,background .2s}
+.opt:has(input:checked){border-color:var(--cyan);background:rgba(25,227,255,.07)}
+.opt{font-weight:400;min-height:60px}.opt input{accent-color:var(--cyan);width:24px;height:24px;flex:none}
+.opt b{color:#fff;display:block;font-weight:600}.opt em{margin-left:auto;font-style:normal;color:var(--cyan);white-space:nowrap}
+.readout{background:var(--panel);padding:30px;border-top:3px solid var(--ember);align-self:start}
+.meter{margin:16px 0}
+.meter div{display:flex;justify-content:space-between;font-size:.9rem}
+.meter i{display:block;height:8px;background:#0b1118;margin-top:6px}
+.meter u{display:block;height:100%;width:0;background:var(--cyan);box-shadow:0 0 10px var(--cyan);transition:width .5s ease}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
+.total b{font-size:2.2rem;color:#fff}
+
+/* STATS */
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px}
 .specs div{border-left:2px solid var(--ember);padding-left:18px}
-.specs b{display:block;font-size:2.6rem;color:#fff;font-weight:700}
+.specs b{display:block;font-size:2.6rem;color:#fff}
 
-/* CTA */
-.cta{background:var(--skin);color:var(--ink);text-align:left}
+/* PROCESS */
+.steps{margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0;counter-reset:s}
+.step{padding:26px 24px 10px 0;border-top:2px solid var(--cyan);counter-increment:s;position:relative}
+.step::before{content:counter(s);position:absolute;top:-16px;left:0;background:var(--steel);padding:0 10px 0 0;color:var(--cyan);font-weight:700;font-size:1.3rem}
+.step h3{color:#fff;margin-bottom:4px}
+
+/* STORIES */
+.stories{background:var(--skin);color:var(--ink)}
+.stories h2{font-family:'Fraunces',serif;font-weight:400;color:var(--ink)}
+.quotes{margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:36px}
+blockquote{font-family:'Fraunces',serif;font-size:1.25rem;line-height:1.45;border-left:3px solid var(--ember);padding-left:20px}
+blockquote footer{font-family:'Chakra Petch',sans-serif;font-size:.9rem;margin-top:12px;color:#6a5444}
+
+/* PLANS */
+.plans{margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;align-items:stretch}
+.plan{padding:32px 28px;border:1px solid var(--line);display:flex;flex-direction:column}
+.plan.pick{border-color:var(--cyan);background:var(--panel);box-shadow:0 0 30px rgba(25,227,255,.15)}
+.plan h3{color:#fff;font-size:1.4rem}
+.plan .price{font-size:2.4rem;color:var(--cyan);margin:8px 0 14px;font-weight:700}
+.plan ul{padding-left:18px;flex:1}
+.plan .btn{margin-top:22px;text-align:center;width:100%}
+
+/* FAQ */
+.faq{background:var(--deep)}
+details{border-bottom:1px solid var(--line);padding:20px 0;max-width:760px}
+summary{min-height:48px;align-items:center;cursor:pointer;color:#fff;font-size:1.15rem;list-style:none;display:flex;justify-content:space-between}
+summary::after{content:'+';color:var(--cyan);font-size:1.4rem}
+details[open] summary::after{content:'\2212'}
+details p{margin-top:10px}
+
+/* BOOK */
+.cta{background:var(--skin);color:var(--ink)}
 .cta h2{font-family:'Fraunces',serif;font-weight:400;color:var(--ink)}
-.cta p{margin-top:18px;max-width:42ch;font-family:'Fraunces',serif;font-size:1.15rem}
-.cta .btn{color:var(--ink)}
-#msg{margin-top:18px;font-weight:600;min-height:1.6em}
-footer{padding:28px 8vw;font-size:.85rem;background:#0b1118}
+form{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:720px}
+label{display:grid;gap:6px;font-weight:600}
+label.full,.full{grid-column:1/-1}
+input,select,textarea{font:inherit;padding:12px 14px;border:2px solid var(--ink);background:#f7e8d4;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:3px solid var(--ember);outline-offset:0}
+#msg{font-weight:600;min-height:1.6em}
+.err{color:#b3261e}
+body>footer{padding:36px 8vw;font-size:.9rem;background:var(--deep);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
-@media(max-width:700px){.mod{grid-template-columns:1fr}.layer nav{font-size:.8rem}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media(max-width:1000px){.mods{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.mods{grid-template-columns:1fr}}
+@media(max-width:800px){.hud{display:none}.builder{grid-template-columns:1fr}form{grid-template-columns:1fr}.layer nav div{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
 <header class="hero" id="hero">
   <div class="layer human">
-    <nav><strong>Seam</strong><span>Clinic for augmentation</span></nav>
-    <h1>Human, upgraded.</h1>
+    <nav><strong>Seam</strong><div><a href="#upgrades">Upgrades</a><a href="#build">Build yours</a><a href="#plans">Plans</a><a href="#book">Book</a></div></nav>
+    <h1>Human,<br>upgraded.</h1>
     <p>Keep everything that made you you. Add what you were always missing.</p>
+    <a class="btn" href="#build">Build your upgrade</a>
   </div>
   <div class="layer machine" aria-hidden="true">
-    <nav><strong>SEAM//OS</strong><span>Status: online</span></nav>
-    <h1>Human.exe, upgraded.</h1>
+    <nav><strong>SEAM//OS</strong><div><a href="#upgrades" tabindex="-1">Upgrades</a><a href="#build" tabindex="-1">Build yours</a><a href="#plans" tabindex="-1">Plans</a><a href="#book" tabindex="-1">Book</a></div></nav>
+    <h1>Human.exe,<br>upgraded.</h1>
     <p>Neural link, optic array and titanium frame. Installed in one visit.</p>
-    <a class="btn" href="#book" tabindex="-1"><span>Book a fitting</span></a>
+    <a class="btn" href="#book" tabindex="-1">Book a fitting</a>
+    <div class="hud"><div><span>Neural link</span><b>98%</b></div><div><span>Optic array</span><b>100%</b></div><div><span>Frame integrity</span><b>97%</b></div><div><span>Heart rate</span><b id="bpm">62 bpm</b></div></div>
   </div>
   <div class="seam"></div>
   <button class="handle" id="handle" role="slider" aria-label="Reveal the machine side" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">&#8596;</button>
-  <div class="hint">Drag to cross the seam</div>
+  <div class="hint" id="hint">Drag the seam, or use the arrow keys</div>
 </header>
 
+<main id="main">
+<div class="ticker" aria-hidden="true"><span>Neural link online &nbsp;//&nbsp; Optic array calibrated &nbsp;//&nbsp; Titanium frame certified &nbsp;//&nbsp; 48-hour recovery &nbsp;//&nbsp; Free consultations this month &nbsp;//&nbsp; Warranty on every limb</span></div>
+
 <section id="upgrades">
-  <h2>Three upgrades, one seamless you</h2>
+  <h2>Six upgrades, one seamless you</h2>
+  <p class="lead">Every part is fitted to your body and works with the others. Choose one, or take the full set.</p>
   <div class="mods">
-    <div class="mod"><div>
-      <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="9"/><path d="M28 4v10M28 42v10M4 28h10M42 28h10M11 11l7 7M38 38l7 7M45 11l-7 7M18 38l-7 7"/></svg>
-      <h3>Neural link</h3></div>
-      <p>Control your devices, search your memory and send messages with a thought. The link sits behind the ear and charges while you sleep.</p></div>
-    <div class="mod"><div>
-      <svg viewBox="0 0 56 56"><path d="M4 28c8-14 40-14 48 0-8 14-40 14-48 0z"/><circle cx="28" cy="28" r="6"/></svg>
-      <h3>Optic array</h3></div>
-      <p>See in the dark, zoom to read a sign across the street, and overlay directions on the road in front of you.</p></div>
-    <div class="mod"><div>
-      <svg viewBox="0 0 56 56"><rect x="14" y="6" width="28" height="44" rx="4"/><path d="M14 20h28M14 34h28M28 6v44"/></svg>
-      <h3>Titanium frame</h3></div>
-      <p>Reinforced limbs that lift three times your body weight and never tire. Fitted to your height and gait.</p></div>
+    <div class="mod"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="9"/><path d="M28 4v10M28 42v10M4 28h10M42 28h10M11 11l7 7M38 38l7 7M45 11l-7 7M18 38l-7 7"/></svg><h3>Neural link</h3><p>Control devices, search your memory and send messages with a thought. Sits behind the ear and charges while you sleep.</p><small>Recovery: 2 days</small></div>
+    <div class="mod"><svg viewBox="0 0 56 56"><path d="M4 28c8-14 40-14 48 0-8 14-40 14-48 0z"/><circle cx="28" cy="28" r="6"/></svg><h3>Optic array</h3><p>See in the dark, zoom to read a sign across the street, and overlay directions on the road in front of you.</p><small>Recovery: 1 day</small></div>
+    <div class="mod"><svg viewBox="0 0 56 56"><rect x="14" y="6" width="28" height="44" rx="4"/><path d="M14 20h28M14 34h28M28 6v44"/></svg><h3>Titanium frame</h3><p>Reinforced limbs that lift three times your body weight and never tire. Fitted to your height and gait.</p><small>Recovery: 5 days</small></div>
+    <div class="mod"><svg viewBox="0 0 56 56"><path d="M28 50C10 38 6 24 14 16c6-6 14-4 14 2 0-6 8-8 14-2 8 8 4 22-14 34z"/><path d="M12 28h10l4-8 6 16 4-8h8"/></svg><h3>Cardio core</h3><p>A synthetic heart that keeps a steady pulse through sprints, altitude and long nights.</p><small>Recovery: 7 days</small></div>
+    <div class="mod"><svg viewBox="0 0 56 56"><path d="M12 28c0-12 8-20 16-20s16 8 16 20M8 30h8v14H8zM40 30h8v14h-8z"/><path d="M44 44c0 6-6 6-12 6"/></svg><h3>Audio sync</h3><p>Hear a whisper across a room, filter out noise, and translate speech live in your own ear.</p><small>Recovery: 1 day</small></div>
+    <div class="mod"><svg viewBox="0 0 56 56"><path d="M20 6v24a8 8 0 0 0 16 0V6M16 14h24M28 38v12M20 50h16"/></svg><h3>Skin shield</h3><p>A flexible armor layer under the skin that resists cuts, heat and impact, and looks like skin.</p><small>Recovery: 3 days</small></div>
+  </div>
+</section>
+
+<section class="build" id="build">
+  <h2>Build your upgrade</h2>
+  <p class="lead">Tick the parts you want and watch your stats change.</p>
+  <div class="builder">
+    <div class="opts" id="opts"></div>
+    <div class="readout" aria-live="polite">
+      <div class="meter"><div><span>Strength</span><span id="vS">0</span></div><i><u id="bS"></u></i></div>
+      <div class="meter"><div><span>Senses</span><span id="vV">0</span></div><i><u id="bV"></u></i></div>
+      <div class="meter"><div><span>Speed</span><span id="vP">0</span></div><i><u id="bP"></u></i></div>
+      <div class="meter"><div><span>Toughness</span><span id="vT">0</span></div><i><u id="bT"></u></i></div>
+      <div class="total"><span>Recovery <b id="rec">0</b> days</span><span>Total <b id="cost">$0</b></span></div>
+      <a class="btn" href="#book" id="bookBuild" style="width:100%;text-align:center">Book this build</a>
+    </div>
   </div>
 </section>
 
 <section class="specs" aria-label="Results">
-  <div><b data-n="12000">0</b>patients upgraded</div>
-  <div><b data-n="3">0</b>times stronger</div>
-  <div><b data-n="48">0</b>hour recovery</div>
-  <div><b data-n="99">0</b>% would do it again</div>
+  <div><b data-n="12000">12,000</b>patients upgraded</div>
+  <div><b data-n="3">3</b>times stronger</div>
+  <div><b data-n="48">48</b>hour recovery</div>
+  <div><b data-n="99">99</b>% would do it again</div>
+</section>
+
+<section id="process">
+  <h2>From first call to first step</h2>
+  <div class="steps">
+    <div class="step"><h3>Consult</h3><p>Talk to a surgeon about what you want and what you want to keep.</p></div>
+    <div class="step"><h3>Scan</h3><p>A full-body scan maps every nerve, bone and joint.</p></div>
+    <div class="step"><h3>Install</h3><p>One visit, under anesthesia, with a robot-assisted team.</p></div>
+    <div class="step"><h3>Calibrate</h3><p>Two weeks of tuning so every part answers instantly.</p></div>
+  </div>
+</section>
+
+<section class="stories">
+  <h2>People who crossed the seam</h2>
+  <div class="quotes">
+    <blockquote>I read a street sign from three blocks away on my first day home.<footer>Aanya, climber</footer></blockquote>
+    <blockquote>My hands stopped shaking. I went back to surgery after eleven years.<footer>Dr. Rao, surgeon</footer></blockquote>
+    <blockquote>The link feels like remembering, not like using a gadget.<footer>Kabir, game designer</footer></blockquote>
+  </div>
+</section>
+
+<section id="plans">
+  <h2>Pick a plan</h2>
+  <div class="plans">
+    <div class="plan"><h3>Single</h3><div class="price">$9,000</div><ul><li>One upgrade of your choice</li><li>Fitting and calibration</li><li>1 year warranty</li></ul><a class="btn" href="#book">Choose Single</a></div>
+    <div class="plan pick"><h3>Triple</h3><div class="price">$24,000</div><ul><li>Any three upgrades</li><li>Priority scheduling</li><li>5 year warranty</li><li>Free yearly tune-up</li></ul><a class="btn" href="#book">Choose Triple</a></div>
+    <div class="plan"><h3>Full seam</h3><div class="price">$48,000</div><ul><li>All six upgrades</li><li>Private recovery suite</li><li>Lifetime warranty</li><li>24/7 engineer line</li></ul><a class="btn" href="#book">Choose Full seam</a></div>
+  </div>
+</section>
+
+<section class="faq">
+  <h2>Questions people ask</h2>
+  <div style="margin-top:36px">
+    <details><summary>Is it reversible?</summary><p>Yes. Every part can be removed, and your original tissue is stored for 10 years.</p></details>
+    <details><summary>Will I feel different?</summary><p>You will feel more like yourself. Parts are tuned to your reflexes so nothing feels foreign.</p></details>
+    <details><summary>How long does it take?</summary><p>The install takes one day. Most people are back to normal life in 48 hours to a week, depending on the parts.</p></details>
+    <details><summary>Can I upgrade later?</summary><p>Yes. Every part uses the same connector, so adding more is a short visit.</p></details>
+  </div>
 </section>
 
 <section class="cta" id="book">
   <h2>Ready to cross the seam?</h2>
-  <p>Book a free consultation. We will walk you through each upgrade and what stays human.</p>
-  <button class="btn" id="bookBtn"><span>Book a fitting</span></button>
-  <div id="msg" role="status"></div>
+  <p class="lead">Book a free consultation. We will walk you through each upgrade and what stays human.</p>
+  <form id="form" novalidate>
+    <label>Name<input id="name" required autocomplete="name"></label>
+    <label>Email<input id="email" type="email" required autocomplete="email"></label>
+    <label>Plan<select id="plan"><option>Single</option><option selected>Triple</option><option>Full seam</option><option>Not sure yet</option></select></label>
+    <label>Preferred date<input id="date" type="date"></label>
+    <label class="full">Your build<textarea id="notes" rows="3" placeholder="Pick parts above and they appear here"></textarea></label>
+    <div class="full"><button class="btn" type="submit" style="margin-top:0">Book a fitting</button></div>
+    <div class="full" id="msg" role="status"></div>
+  </form>
 </section>
 
-<footer>Seam. A demo landing page built for the Techfest CA Program.</footer>
+</main>
+<footer><span><strong>Seam</strong> demo landing page for the Techfest CA Program</span><span>Not a real clinic</span></footer>
 
 <script>
+// Hero seam
 const hero=document.getElementById('hero'),handle=document.getElementById('handle');
 let drag=false;
 function setX(p){p=Math.max(0,Math.min(100,p));hero.style.setProperty('--x',p+'%');handle.setAttribute('aria-valuenow',Math.round(p))}
 function fromEvent(e){const r=hero.getBoundingClientRect();setX((e.clientX-r.left)/r.width*100)}
-hero.addEventListener('pointerdown',e=>{drag=true;fromEvent(e)});
-window.addEventListener('pointermove',e=>{if(drag)fromEvent(e)});
-window.addEventListener('pointerup',()=>drag=false);
+hero.addEventListener('pointerdown',e=>{document.getElementById('hint').style.display='none';if(e.target.closest('a'))return;drag=true;fromEvent(e)});
+addEventListener('pointermove',e=>{if(drag)fromEvent(e)});
+addEventListener('pointerup',()=>drag=false);
 handle.addEventListener('keydown',e=>{const v=+handle.getAttribute('aria-valuenow');
   if(e.key==='ArrowLeft')setX(v-5);if(e.key==='ArrowRight')setX(v+5)});
-// one intro sweep: the machine side slides in from the right
 if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
-  let p=100;setX(100);const t0=performance.now();
+  setInterval(()=>{document.getElementById('bpm').textContent=(60+Math.round(Math.random()*5))+' bpm'},1200);
+  setX(100);const t0=performance.now();
   (function step(t){const k=Math.min((t-t0)/1400,1);setX(100-50*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step)})(t0);
 }
-// count-up stats
+
+// Builder
+const parts=[
+ {n:'Neural link',d:'Think to control',c:6000,r:2,s:0,v:10,p:35,t:0},
+ {n:'Optic array',d:'Night and zoom vision',c:7000,r:1,s:0,v:35,p:10,t:0},
+ {n:'Titanium frame',d:'3x lifting strength',c:12000,r:5,s:45,v:0,p:15,t:25},
+ {n:'Cardio core',d:'Tireless pulse',c:15000,r:7,s:10,v:0,p:25,t:15},
+ {n:'Audio sync',d:'Hear and translate',c:4000,r:1,s:0,v:20,p:10,t:0},
+ {n:'Skin shield',d:'Armored under the skin',c:8000,r:3,s:0,v:0,p:5,t:35}];
+const opts=document.getElementById('opts');
+parts.forEach((p,i)=>{opts.insertAdjacentHTML('beforeend',`<label class="opt"><input type="checkbox" data-i="${i}"><span><b>${p.n}</b>${p.d}</span><em>$${p.c.toLocaleString()}</em></label>`)});
+function calc(){
+  const t={s:0,v:0,p:0,t:0,r:0,c:0},names=[];
+  opts.querySelectorAll('input:checked').forEach(el=>{const p=parts[el.dataset.i];names.push(p.n);
+    ['s','v','p','t','r','c'].forEach(k=>t[k]+=p[k])});
+  [['S','s'],['V','v'],['P','p'],['T','t']].forEach(([id,k])=>{const val=Math.min(t[k],100);
+    document.getElementById('v'+id).textContent=val;document.getElementById('b'+id).style.width=val+'%'});
+  document.getElementById('rec').textContent=t.r;
+  document.getElementById('cost').textContent='$'+t.c.toLocaleString();
+  document.getElementById('notes').value=names.length?'Build: '+names.join(', ')+' ('+document.getElementById('cost').textContent+')':'';
+}
+opts.addEventListener('change',calc);
+opts.querySelectorAll('input').forEach((el,i)=>{if(i<2)el.checked=true});calc();
+
+// Count-up stats
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);
   const n=+e.target.dataset.n,t0=performance.now();
   (function s(t){const k=Math.min((t-t0)/1200,1);e.target.textContent=Math.round(n*k).toLocaleString();if(k<1)requestAnimationFrame(s)})(t0)}));
 document.querySelectorAll('[data-n]').forEach(el=>io.observe(el));
-document.getElementById('bookBtn').addEventListener('click',()=>{
-  document.getElementById('msg').textContent='Fitting requested. We will contact you within one day.'});
+
+// Plan buttons preselect the form
+document.querySelectorAll('.plan .btn').forEach(b=>b.addEventListener('click',()=>{
+  const name=b.textContent.replace('Choose ','');document.getElementById('plan').value=name}));
+
+// Booking form
+document.getElementById('date').min=new Date().toISOString().slice(0,10);
+document.getElementById('form').addEventListener('submit',e=>{
+  e.preventDefault();const m=document.getElementById('msg'),n=document.getElementById('name').value.trim(),em=document.getElementById('email').value.trim();
+  if(!n||!/^\S+@\S+\.\S+$/.test(em)){m.className='full err';m.textContent='Enter your name and a valid email so we can confirm your fitting.';return}
+  m.className='full';m.textContent='Thanks '+n+'. Your fitting request is in. We will email '+em+' within one day.';
+});
 </script>
 </body>
 </html>
