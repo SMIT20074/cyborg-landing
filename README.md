@@ -15,3 +15,6 @@ Open `index.html` in a browser.
 
 ## Live demo
 https://smit20074.github.io/cyborg-landing/
+
+## Demo video
+https://drive.google.com/file/d/1DrPDdAoQefrgV3BeD7oYvebfF9AnHotC/view?usp=sharing
